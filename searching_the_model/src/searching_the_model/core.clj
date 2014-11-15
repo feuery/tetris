@@ -25,9 +25,9 @@
     [1 1]
     [0 1]]
 
-   [[0 1 0]
-    [0 1 0]
-    [0 1 0]]
+   [[1]
+    [1]
+    [1]]
 
    [[1 1]
     [1 1]]
@@ -77,36 +77,41 @@
   "Merges the current-block to the world"
   []
   (let [{[x y] :location
-         block :block} @current-block]
-    ;;This'll be horrible, but easy 
-         
+         block :block} @current-block]         
     (pprint (merge-2d-to-2d block @world [x y]))))
 
+;; This'll grow into a monster
 (defn move-down! []
   (dosync 
    (alter current-block update-in [:location 1] inc)
-   (let [lowest-row-xs (range (-> @current-block :location (get 0))
-                              (+ (-> @current-block :location (get 0))
-                                 (block-width @current-block)))
-         lowest-row-y (+ (-> @current-block :location (get 1))
-                         (block-height @current-block))
-         indexes-under-us (for [x lowest-row-xs]
-                            [(inc lowest-row-y) x])
-         values-under-us (map #(get-in @world %) indexes-under-us)]
+   (let [current-block-x (-> @current-block :location (get 0))
+         current-block-height (block-height @current-block)
+
+         lowest-block-row (last (:block @current-block))
+         
+         lowest-row-y  (+ (-> @current-block :location (get 1))
+                         current-block-height)
+         lowest-row-xs  (filter #(pos? (get lowest-block-row %))
+                                (range 0 (count lowest-block-row)))
+         
+         indexes-under-block (for [x lowest-row-xs]
+                               [(inc lowest-row-y) (+ x current-block-x)])
+         values-under-block (map #(get-in @world %) indexes-under-block)]
      ;;Do log
-     (println "Values under us: ")
-     (pprint values-under-us)
+
+     (println "Lowest row-indexes of blocks: ")
+     (pprint lowest-row-xs)
+     
+     (println "Values under block: ")
+     (pprint values-under-block)
 
      (println "Indexes...")
-     (println indexes-under-us)
+     (println indexes-under-block)
 
      ;continue
      (when (or
-            (some nil? values-under-us)
-            (some pos? values-under-us)
-            ;; ;;We're at the edge
-            ;; (>= lowest-row-y (count @world))
-            )
+            (some nil? values-under-block)
+            (some pos? values-under-block))
 
        (alter world (fn [world]
                       (let [{[x y] :location
