@@ -3,6 +3,12 @@
   (:require [clojure.pprint :refer [pprint]]
             [clojure.stacktrace :refer :all]))
 
+;;; How to use?
+;; Reset the world with (reset-world)
+;; Move left-righ with move-horizontally
+;; Move down with move-down
+;; And check the world-state with show-world
+
 (def W (/ 800 50))
 (def H (/ 600 40))
 
@@ -114,3 +120,5 @@
 (defn move-horizontally [& {:keys [left?] :or {left? false}}]
   (swap! current-block update-in [:location 0] (if left? dec inc)))
   
+
+
