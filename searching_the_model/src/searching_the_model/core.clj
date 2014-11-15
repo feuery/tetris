@@ -95,37 +95,41 @@
    [0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0]
    [0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0]
    [0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0]
-   [0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0]]
+   [0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0]])
+
+(defn transpose [seq-of-seqs]
+  {:pre [(not (empty? seq-of-seqs))]}
+  (apply mapv vector seq-of-seqs))
+
+(defn indices [pred coll]
+   (keep-indexed #(when (pred %2) %1) coll))
 
 ;; This'll grow into a monster
 (defn move-down! []
   (dosync 
    (alter current-block update-in [:location 1] inc)
    (let [current-block-x (-> @current-block :location (get 0))
+         current-block-y (-> @current-block :location (get 1))
          current-block-height (block-height @current-block)
 
-         lowest-block-row (last (:block @current-block))
+         vertical-block-rows (transpose (:block @current-block))
          
-         lowest-row-y  (+ (-> @current-block :location (get 1))
-                         current-block-height)
-         lowest-row-xs  (filter #(pos? (get lowest-block-row %))
-                                (range 0 (count lowest-block-row)))
+         xs (range 0 (if (= (block-width (:block @current-block)) 1)
+                       (count vertical-block-rows)
+                       (block-width (:block @current-block))))
+         lowest-y-coords (->> xs
+                              (map (fn [index]
+                                     (-> pos?
+                                         (indices (get vertical-block-rows index))
+                                         last))))
          
-         indexes-under-block (for [x lowest-row-xs]
-                               [(inc lowest-row-y) (+ x current-block-x)])
+         indexes-under-block (->> (map vector lowest-y-coords xs)
+                                  (map (fn [[y x]] [(+ current-block-y (inc y))
+                                                    (+ current-block-x x)]))
+                                  vec)
+                               
          values-under-block (map #(get-in @world %) indexes-under-block)]
-     ;;Do log
-
-     (println "Lowest row-indexes of blocks: ")
-     (pprint lowest-row-xs)
      
-     (println "Values under block: ")
-     (pprint values-under-block)
-
-     (println "Indexes...")
-     (println indexes-under-block)
-
-     ;continue
      (when (or
             (some nil? values-under-block)
             (some pos? values-under-block))
@@ -140,7 +144,9 @@
    (show-world)))
 
 (defn move-horizontally [& {:keys [left?] :or {left? false}}]
-  (swap! current-block update-in [:location 0] (if left? dec inc)))
+  (dosync
+   (alter current-block update-in [:location 0] (if left? dec inc)))
+  (show-world))
   
 
 
