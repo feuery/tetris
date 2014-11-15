@@ -80,6 +80,23 @@
          block :block} @current-block]         
     (pprint (merge-2d-to-2d block @world [x y]))))
 
+(comment
+  [[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+   [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+   [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+   [0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0]
+   [0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0]
+   [0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0]
+   [0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0] ;;Seuraavan move-down!in myötä hajoaa, koskatarkistetaan vain oikeanpuolimmaisen alla oleva sälä....
+   [0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0]
+   [0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0]
+   [0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0]
+   [0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0]
+   [0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0]
+   [0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0]
+   [0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0]
+   [0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0]]
+
 ;; This'll grow into a monster
 (defn move-down! []
   (dosync 
