@@ -1,5 +1,9 @@
 #include <standard_blocks.h>
 
+#include <iostream>
+
+using namespace std;
+
 template <size_t w, size_t h>
 vector<vector<bool>> toVector(bool (&arr)[w][h])
 {
@@ -17,7 +21,15 @@ vector<vector<bool>> toVector(bool (&arr)[w][h])
   return toret;
 }
 
-Block standard_blocks:: get_standard_block(int n)
+int standard_blocks::count()
+{
+  //Because side-effects are cool
+  if(blocks.size()==0) get_standard_block(0);
+  
+  return blocks.size();
+}
+
+Block standard_blocks::get_standard_block(int n)
 {/*
 	[[[0 1]
 	[1 1]
@@ -41,6 +53,9 @@ Block standard_blocks:: get_standard_block(int n)
 	[[0 1]
 	[0 1]
 	[1 1]]] */
+
+  cout<<"In standard_blocks::get_standard_block(int), n is "<<n<<endl;
+  
   if(blocks.size()==0)
     {
       bool eka[][3] = {
@@ -82,14 +97,30 @@ Block standard_blocks:: get_standard_block(int n)
 	  true},
 	 {true, true, true}};
 
-      blocks.push_back(Block(2,3, toVector(eka)));
-      blocks.push_back(Block(2,3, toVector(toka)));
-      blocks.push_back(Block(1,3, toVector(kolmas)));
-      blocks.push_back(Block(2,2, toVector(neljas)));
+      int rowCounter = 0;
 
-      blocks.push_back(Block(2,3, toVector(viides)));
-      blocks.push_back(Block(2,3, toVector(kuudes)));
+      try
+	{
+	  blocks.push_back(Block(2,3, toVector(eka)));
+	  rowCounter++;
+	  blocks.push_back(Block(2,3, toVector(toka)));
+	  rowCounter++;
+	  blocks.push_back(Block(3,1, toVector(kolmas)));
+	  rowCounter++;
+	  blocks.push_back(Block(2,2, toVector(neljas)));
+	  rowCounter++;
+
+	  blocks.push_back(Block(2,3, toVector(viides)));
+	  rowCounter++;
+	  blocks.push_back(Block(2,3, toVector(kuudes)));
+	  rowCounter++;
+	}
+      catch(out_of_range ex)
+	{
+	  cout<<"out_of_range@standard_blocks.cpp  | rowcounter: "<<rowCounter<<endl;
+	}
     }
 
+  cout<<"Returning block at " << n << endl;
   return blocks.at(n);
 }

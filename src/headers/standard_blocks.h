@@ -13,6 +13,7 @@ private:
 
 public:
   Block get_standard_block(int n);
+  int count();
 };
 
 #endif //STANDARD_BLOCKS_H

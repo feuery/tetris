@@ -12,9 +12,14 @@ public:
   bool elementAt(int x, int Y);
 
   //Destuctive
-  void merge(Block block, int x, int y); 
+  void merge(Block block, int x, int y);
+
+  SDL_Surface* Render();
 private:
   Block* data;
+  Block current_block;
+
+  int current_x = 0, current_y = 0;
 };
 
 #endif //WORLD_H

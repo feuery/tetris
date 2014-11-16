@@ -23,6 +23,8 @@ public:
   Block merge(Block other, int x, int y);
 
   SDL_Surface* Render();
+
+  bool Current_Block = false;
   
 private:
   vector<Blockrow> vertical_rows;

@@ -37,14 +37,18 @@ Game::~Game()
 
 void Game::Run()
 {
-  cout<<"In Game::Run()"<<endl;
+  cout<<"At Game::Run()|W: "<<W<<endl;
+  int width = 8; //(W/50) - 3;
+
+  cout<<"JEEE"<<width<<endl;
   
-  World world(W/50, H/50);
-  cout<<"World allocated"<<endl;
+  
+  World world(width, H/50);
+  cout<<"World is ready!"<<endl;
   while(initialized())
     {
-      //update(world);
-      draw(window_surface);//, world);
+      update(world);
+      draw(window_surface, world);
       event_loop();
     }
 }
@@ -55,11 +59,20 @@ void Game::update(World& world)
   // cout<< (world.elementAt(0,0)?"TRUUUE":"false :(") <<endl;
 }
 
-void Game::draw(SDL_Surface* window_surface)//, World& world)
+void Game::draw(SDL_Surface* window_surface, World& world)
 {
-  SDL_Rect rect = {100,100, 200,10};
-  SDL_FillRect(window_surface, &rect, SDL_MapRGB(window_surface->format, 0xFF, 0,0));
+  SDL_Surface* world_image = world.Render();
+
+  int half_w = W/2;
+  int x = half_w - world_image->w / 2;
+  
+  SDL_Rect rect = {x, 0, 0, 0};
+  
+  SDL_BlitSurface(world_image, NULL, window_surface, &rect);
+  
   SDL_UpdateWindowSurface(window);
+
+  SDL_FreeSurface(world_image);
 }
 
 void Game::event_loop()
