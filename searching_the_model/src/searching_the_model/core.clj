@@ -41,9 +41,11 @@
     [1 1]]])
 
 (defn block-height [block]
+  {:pre [(not (map? block))]}
   (count block))
 
 (defn block-width [block]
+  {:pre [(not (map? (first block)))]}
   (-> block first count))
 
 (def current-block (ref nil))
@@ -80,22 +82,6 @@
          block :block} @current-block]         
     (pprint (merge-2d-to-2d block @world [x y]))))
 
-(comment
-  [[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
-   [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
-   [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
-   [0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0]
-   [0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0]
-   [0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0]
-   [0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0] ;;Seuraavan move-down!in myötä hajoaa, koskatarkistetaan vain oikeanpuolimmaisen alla oleva sälä....
-   [0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0]
-   [0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0]
-   [0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0]
-   [0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0]
-   [0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0]
-   [0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0]
-   [0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0]
-   [0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0]])
 
 (defn transpose [seq-of-seqs]
   {:pre [(not (empty? seq-of-seqs))]}
@@ -110,7 +96,7 @@
    (alter current-block update-in [:location 1] inc)
    (let [current-block-x (-> @current-block :location (get 0))
          current-block-y (-> @current-block :location (get 1))
-         current-block-height (block-height @current-block)
+         current-block-height (block-height (:block @current-block))
 
          vertical-block-rows (transpose (:block @current-block))
          
@@ -143,9 +129,46 @@
        (put-block!)))
    (show-world)))
 
+(defn can-we-move? [world current-block & {:keys [left?] :or {left? false}}]
+  (let [{current-block :block
+         [x y] :location} current-block
+         left x
+         right (+ x (dec (block-width current-block)))
+
+         left-ys (map (partial + y) (indices #(= (first %) 1) current-block))
+         right-ys (map (partial + y) (indices #(= (last %) 1) current-block))
+
+         left-xs (repeat (count left-ys) (dec left))
+         right-xs (repeat (count right-ys) (inc right))
+
+         left-coordinates (map vector left-ys left-xs)
+         right-coordinates (map vector right-ys right-xs)
+         
+         can-we-move-left? (->> left-coordinates
+                                (map (fn [coord]
+                                       (let [value (get-in world coord)]
+                                         (= value 0))))
+                                (reduce #(and %1 %2)))
+         can-we-move-right? (->> right-coordinates
+                                (map (fn [coord]
+                                       (let [value (get-in world coord)]
+                                         (= value 0))))
+                                (reduce #(and %1 %2)))]
+    ;; (println [can-we-move-left?
+    ;;           can-we-move-right?])
+    ;; (println "Indeksit: " right-coordinates)
+    (if left?
+      can-we-move-left?
+      can-we-move-right?)))
+    
+
+
+    
+
 (defn move-horizontally [& {:keys [left?] :or {left? false}}]
-  (dosync
-   (alter current-block update-in [:location 0] (if left? dec inc)))
+  (if (can-we-move? @world @current-block :left? left?)
+    (dosync
+     (alter current-block update-in [:location 0] (if left? dec inc))))
   (show-world))
   
 
