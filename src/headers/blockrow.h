@@ -2,10 +2,12 @@
 #define BLOCKROW_H
 
 class Blockrow{
+  friend class Block;
 public:
   Blockrow(int length);
   bool elementAt(int at);
-  ~Blockrow();
+  ~Blockrow();  
+  
 private:
 
   int length;
