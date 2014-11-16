@@ -27,6 +27,8 @@ private:
   int W, H; //pixels
 
   TTF_Font *font;
+
+  Uint32 lastUpdated;
 };
 
 #endif //GAME_H

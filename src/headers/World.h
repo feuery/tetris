@@ -19,6 +19,8 @@ public:
   {
     return data->toString();
   }
+
+  void MoveDown();
 private:
   Block* data;
   Block current_block;

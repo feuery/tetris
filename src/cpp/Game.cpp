@@ -3,7 +3,7 @@
 
 using namespace std;
 
-Game::Game(int w, int h): W(w), H(h)
+Game::Game(int w, int h): W(w), H(h), lastUpdated(0)
 {
   cout<<"Initing everything"<<endl;
   if(SDL_Init(SDL_INIT_EVERYTHING)!=0)
@@ -68,8 +68,11 @@ void Game::Run()
 
 void Game::update(World& world)
 {
-  // World-class functions
-  // cout<< (world.elementAt(0,0)?"TRUUUE":"false :(") <<endl;
+  if((SDL_GetTicks() - lastUpdated) > 1000)
+    {
+      world.MoveDown();
+      lastUpdated = SDL_GetTicks();
+    }
 }
 
 void Game::draw(SDL_Surface* window_surface, World& world)

@@ -47,3 +47,10 @@ SDL_Surface* World::Render()
   return  world_surface;		
 }
 
+void World::MoveDown()
+{
+  int world_height = data->Height(),
+    block_lowest_y = current_y + current_block.Height();
+
+  if(block_lowest_y < world_height) current_y++;
+}
