@@ -52,8 +52,11 @@
 
 (defn put-block! []
   (dosync
-   (ref-set current-block {:location [(/ (count (first @world)) 2), 0]
-                           :block (get blocks (rand-int (count blocks)))})))
+   (let [location [(/ (count (first @world)) 2), 0]]
+     (if (some (partial = 1) (first @world))
+       (println "Häviö!")
+       (ref-set current-block {:location location
+                               :block (get blocks (rand-int (count blocks)))})))))
 
 (defn reset-world []
   (dosync
@@ -113,7 +116,7 @@
                                   (map (fn [[y x]] [(+ current-block-y (inc y))
                                                     (+ current-block-x x)]))
                                   vec)
-                               
+         
          values-under-block (map #(get-in @world %) indexes-under-block)]
      
      (when (or
@@ -125,9 +128,11 @@
                              block :block} @current-block]
                         
                         (merge-2d-to-2d block world [x y]))))
+       (pprint (first @world))
+       ;; (pprint  @world)
        
-       (put-block!)))
-   (show-world)))
+       (put-block!))))
+   (show-world))
 
 (defn can-we-move? [world current-block & {:keys [left?] :or {left? false}}]
   (let [{current-block :block
