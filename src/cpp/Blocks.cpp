@@ -25,7 +25,7 @@ Block::Block(int W, int H, vector<vector<bool>> values): W(W), H(H)
     {
       Blockrow row(H);
       for(int y=0; y<H; y++)
-	row.data[y] = values.at(x).at(y);
+	row.data.get()[y] = values.at(x).at(y);
     }
 }
 
@@ -39,7 +39,7 @@ Block Block::set(int x, int y, bool value)
   Block toret(W,H);
   toret.vertical_rows = vertical_rows; //Hopefully this result's in a copy...
 
-  toret.vertical_rows.at(x).data[y] = value; 
+  toret.vertical_rows.at(x).data.get()[y] = value; 
 
   return toret; //And this hopefully copies the local object instead of returning garbage
 }
