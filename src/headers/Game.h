@@ -1,0 +1,29 @@
+#ifndef GAME_H
+#define GAME_H
+
+#include <SDL.h>
+#include <World.h>
+
+class Game
+{
+public:
+  Game(int w, int h);
+  void Run();
+
+  bool initialized() const;
+  
+  ~Game();
+  
+private:
+  void event_loop();
+  void draw(SDL_Surface* window, World& world);
+  void update(World& world);
+
+  SDL_Surface* window_surface = nullptr;
+  SDL_Window* window = nullptr;
+
+  bool running = false;
+  int W, H; //pixels
+};
+
+#endif //GAME_H
