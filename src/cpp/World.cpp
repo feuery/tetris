@@ -1,8 +1,13 @@
 #include <World.h>
+#include <iostream>
+
+using namespace std;
 
 World::World(int W, int H)
 {
+  cout<<"In World::World(int, int)"<<endl;
   data = new Block(W, H);
+  cout<<"Leaving World::World(int, int)"<<endl;
 }
 
 World::~World()

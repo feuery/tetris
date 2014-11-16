@@ -37,11 +37,14 @@ Game::~Game()
 
 void Game::Run()
 {
+  cout<<"In Game::Run()"<<endl;
+  
   World world(W/50, H/50);
+  cout<<"World allocated"<<endl;
   while(initialized())
     {
-      update(world);
-      draw(window_surface, world);
+      //update(world);
+      draw(window_surface);//, world);
       event_loop();
     }
 }
@@ -52,9 +55,9 @@ void Game::update(World& world)
   // cout<< (world.elementAt(0,0)?"TRUUUE":"false :(") <<endl;
 }
 
-void Game::draw(SDL_Surface* window_surface, World& world)
+void Game::draw(SDL_Surface* window_surface)//, World& world)
 {
-  SDL_Rect rect = {100,100, 600,400};
+  SDL_Rect rect = {100,100, 200,10};
   SDL_FillRect(window_surface, &rect, SDL_MapRGB(window_surface->format, 0xFF, 0,0));
   SDL_UpdateWindowSurface(window);
 }

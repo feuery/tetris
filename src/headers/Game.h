@@ -16,7 +16,7 @@ public:
   
 private:
   void event_loop();
-  void draw(SDL_Surface* window, World& world);
+  void draw(SDL_Surface* window);//, World& world);
   void update(World& world);
 
   SDL_Surface* window_surface = nullptr;

@@ -13,6 +13,8 @@ private:
   int length;
   bool* data;
 
+  bool disposed = false;
+
 };
 
 #endif //BLOCKROW_H

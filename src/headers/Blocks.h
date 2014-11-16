@@ -4,6 +4,9 @@
 #include <vector>
 #include <blockrow.h>
 
+#include <SDL.h>
+#include <SDL2_gfxPrimitives.h>
+
 using namespace std;
 
 class Block{
@@ -19,6 +22,7 @@ public:
 
   Block merge(Block other, int x, int y);
 
+  SDL_Surface* Render();
   
 private:
   vector<Blockrow> vertical_rows;
