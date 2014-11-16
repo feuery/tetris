@@ -11,7 +11,6 @@ Game::Game(int w, int h): W(w), H(h)
       fprintf(stderr, "Virhe %s\n", SDL_GetError());
       return;
     }
-  atexit(SDL_Quit);
 
   window = SDL_CreateWindow("SDL-testi", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, W, H, SDL_WINDOW_SHOWN);
   if (window == nullptr)
@@ -20,19 +19,33 @@ Game::Game(int w, int h): W(w), H(h)
       return;
     }
 
+  if(TTF_Init() == -1)
+    {
+      printf("TTF_Init: %s\n", TTF_GetError());
+      return;
+    }
+  
   this->window_surface = SDL_GetWindowSurface(this->window);
+
+  atexit(SDL_Quit);
+  atexit(TTF_Quit);
   running = true;
+
+  font = TTF_OpenFont("/usr/share/fonts/TTF/DejaVuSans.ttf", 16);
+  
+  cout<<"Inited successfully"<<endl;
 }
 
 bool Game::initialized() const
 {
-  return running && window != nullptr && window_surface != nullptr;
+  return running && window != nullptr && window_surface != nullptr && font;
 }
 
 Game::~Game()
 {
   //You don't need to free the window_surface
-  SDL_DestroyWindow(window);
+  TTF_CloseFont(font);
+  SDL_DestroyWindow(window);  
 }
 
 void Game::Run()
@@ -61,6 +74,8 @@ void Game::update(World& world)
 
 void Game::draw(SDL_Surface* window_surface, World& world)
 {
+  SDL_FillRect(window_surface, NULL, 0);
+  
   SDL_Surface* world_image = world.Render();
 
   int half_w = W/2;
@@ -69,6 +84,8 @@ void Game::draw(SDL_Surface* window_surface, World& world)
   SDL_Rect rect = {x, 0, 0, 0};
   
   SDL_BlitSurface(world_image, NULL, window_surface, &rect);
+
+  // cout<<world.toString()<<endl; @TODO: A verbose - flag?
   
   SDL_UpdateWindowSurface(window);
 

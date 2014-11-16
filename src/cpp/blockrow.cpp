@@ -5,7 +5,8 @@
 
 using namespace std;
 
-Blockrow::Blockrow(int length): length(length), data(new bool[length]) { }
+Blockrow::Blockrow(int length): length(length), data(new bool[length] {false}){ }
+  
 
 bool Blockrow::elementAt(int at)
 {

@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <blockrow.h>
+#include <string.h>
 
 #include <SDL.h>
 #include <SDL2_gfxPrimitives.h>
@@ -28,7 +29,9 @@ public:
 
   int Width();
   int Height();
-  
+
+
+  string toString();
 private:
   vector<Blockrow> vertical_rows;
   int W, H;

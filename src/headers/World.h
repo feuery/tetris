@@ -15,11 +15,16 @@ public:
   void merge(Block block, int x, int y);
 
   SDL_Surface* Render();
+  string toString()
+  {
+    return data->toString();
+  }
 private:
   Block* data;
   Block current_block;
 
   int current_x = 0, current_y = 0;
+  
 };
 
 #endif //WORLD_H

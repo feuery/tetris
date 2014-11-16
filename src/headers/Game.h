@@ -3,6 +3,7 @@
 
 #include <SDL.h>
 #include <World.h>
+#include <SDL_ttf.h>
 
 class Game
 {
@@ -24,6 +25,8 @@ private:
 
   bool running = false;
   int W, H; //pixels
+
+  TTF_Font *font;
 };
 
 #endif //GAME_H

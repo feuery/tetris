@@ -1,19 +1,17 @@
 #include <Blocks.h>
 #include <iostream>
 
-#include <string>
-
 using namespace std;
 
-string toString(Block b)
+string Block::toString()
 {
   string toret = "[";
-  for(int x=0;x<b.Width(); x++)
+  for(int x=0;x<Width(); x++)
     {
       toret += "[";
-      for(int y=0; y<b.Height(); y++)
+      for(int y=0; y<Height(); y++)
 	{
-	  toret += (b.elementAt(x,y)?"true":"false");
+	  toret += (elementAt(x,y)?"true":"false");
 	  toret += ", ";
 	}
       toret += "],\n";
