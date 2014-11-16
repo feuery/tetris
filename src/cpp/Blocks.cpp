@@ -1,8 +1,36 @@
 #include <Blocks.h>
 #include <iostream>
 
+#include <string>
+
 using namespace std;
 
+string toString(Block b)
+{
+  string toret = "[";
+  for(int x=0;x<b.Width(); x++)
+    {
+      toret += "[";
+      for(int y=0; y<b.Height(); y++)
+	{
+	  toret += (b.elementAt(x,y)?"true":"false");
+	  toret += ", ";
+	}
+      toret += "],\n";
+    }
+  return toret +"]";
+}
+
+int  Block::Width()
+    {
+      return W;
+    }
+
+  int  Block::Height()
+  {
+    return H;
+  }
+  
 Block::Block(int W, int H): W(W), H(H)
 {
   for(int x=0;x<W;x++)
@@ -10,7 +38,6 @@ Block::Block(int W, int H): W(W), H(H)
       Blockrow row(H);
       vertical_rows.push_back(row);
     }
-
 }
 
 Block::Block(int W, int H, vector<vector<bool>> values): W(W), H(H)
@@ -21,19 +48,28 @@ Block::Block(int W, int H, vector<vector<bool>> values): W(W), H(H)
       for(int y=0; y<H; y++)
 	try
 	  {
-	    //Trying to read at values.at(0).at(2), when values.size is 3 and values.at(x).size() is 1
 	    row.data.get()[y] = values.at(x).at(y);
 	  }
 	catch(out_of_range ex)
 	  {
 	    cout<<"Trying to read at values.at("<<x<<").at("<<y<<"), when values.size is "<<values.size()<<" and values.at(x).size() is "<<values.at(x).size()<<endl;
 	  }
+      vertical_rows.push_back(row);
     }
 }
 
 bool Block::elementAt(int x, int y)
 {
-  return vertical_rows.at(x).elementAt(y);
+  // try
+  //   {
+      return vertical_rows.at(x).elementAt(y);
+  //   }
+  // catch(out_of_range ex)
+  //   {
+  //     cout<<"Out of range@ Block::elementAt(int,int)"<<endl;
+  //     cout<<"x & width: " << x<<", "<<vertical_rows.size()<<endl;
+  //     throw ex;
+  //   }
 }
 
 Block Block::set(int x, int y, bool value)
@@ -87,9 +123,10 @@ SDL_Surface* Block::Render()
 	  {
 	    SDL_Rect rect = {x * 50 +5, y * 50 + 5, 40, 40};
 	    SDL_FillRect(toret, &rect,
-			 Current_Block?
-			 SDL_MapRGB(toret->format, 255, 0, 0):
-			 SDL_MapRGB(toret->format, 0, 0, 255)); //@TODO: Write custom colours for each block...
+			 elementAt(x,y)?
+			 SDL_MapRGB(toret->format, 255, 0, 0) :
+			 SDL_MapRGB(toret->format, 0, 0, 255)
+			 ); //@TODO: Write custom colours for each block...
 	  }
       }
 

@@ -44,6 +44,6 @@ SDL_Surface* World::Render()
 
   SDL_FreeSurface(current_surface);
   
-  return world_surface;
+  return  world_surface;		
 }
 

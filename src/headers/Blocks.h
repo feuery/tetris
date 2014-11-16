@@ -25,6 +25,9 @@ public:
   SDL_Surface* Render();
 
   bool Current_Block = false;
+
+  int Width();
+  int Height();
   
 private:
   vector<Blockrow> vertical_rows;
