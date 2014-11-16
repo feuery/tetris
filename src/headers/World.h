@@ -1,6 +1,8 @@
 #ifndef WORLD_H
 #define WORLD_H
 
+#include <Blocks.h>
+
 //Take this class always as a reference&, because copying it dumps core for reasons known only to elder C++ gods...
 class World{
 public:
@@ -8,9 +10,11 @@ public:
   ~World();
 
   bool elementAt(int x, int Y);
-  
+
+  //Destuctive
+  void merge(Block block, int x, int y); 
 private:
-  bool** world;
+  Block* data;
 };
 
 #endif //WORLD_H

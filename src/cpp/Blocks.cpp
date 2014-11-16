@@ -33,3 +33,20 @@ Block Block::set(int x, int y, bool value)
 
   return toret; //And this hopefully copies the local object instead of returning garbage
 }
+
+Block Block::merge(Block other, int x, int y)
+{
+  Block toret(W, H);
+  toret.vertical_rows = vertical_rows;
+
+  for(int local_x=x; local_x < x + other.W; x++)
+    {
+      for(int local_y=0; local_y < y + other.H; y++)
+	{
+	  toret = toret.set(local_x, local_y,
+			    other.elementAt(local_x-W, local_y-H));
+	}
+    }
+
+  return toret;    
+}
