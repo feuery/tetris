@@ -9,6 +9,16 @@ Block::Block(int W, int H): W(W), H(H)
     }
 }
 
+Block::Block(int W, int H, vector<vector<bool>> values): W(W), H(H)
+{
+  for(int x=0; x<W; x++)
+    {
+      Blockrow row(H);
+      for(int y=0; y<H; y++)
+	row.data[y] = values.at(x).at(y);
+    }
+}
+
 bool Block::elementAt(int x, int y)
 {
   return vertical_rows.at(x).elementAt(y);

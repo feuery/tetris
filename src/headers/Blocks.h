@@ -10,6 +10,8 @@ class Block{
 public:
   Block(int W, int H);
 
+  Block(int W, int H, vector<vector<bool>> values); //IE. not statically bounds-checked 2D-array
+  
   bool elementAt(int x, int y);
   //Should be not-destructive
   //But, if I'm wrong, we'll get funny bugs in the future
