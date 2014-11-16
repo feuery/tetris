@@ -171,5 +171,14 @@
      (alter current-block update-in [:location 0] (if left? dec inc))))
   (show-world))
   
+(defn rotate [block]
+  (->> block
+       transpose 
+       (map (comp vec reverse))
+       vec))
 
+(defn rotate-block! []
+  (dosync
+   (alter current-block update-in [:block] rotate))
+  (show-world))
 
