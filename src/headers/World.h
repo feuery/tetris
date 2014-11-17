@@ -22,6 +22,7 @@ public:
   void MoveDown();
   void MoveLeft();
   void MoveRight();
+  void DropDown();
 private:
 
   bool newBlockRequired();

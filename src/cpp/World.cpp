@@ -138,6 +138,11 @@ void World::MoveDown()
     }      
 }
 
+void World::DropDown()
+{
+  while(!newBlockRequired()) current_y++;
+}
+
 void World::MoveLeft()
 {
   if(// current_x > 0 || 

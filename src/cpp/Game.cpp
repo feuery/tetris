@@ -86,6 +86,7 @@ void Game::update(World& world)
     {
       if(leftDown) world.MoveLeft();
       if(rightDown) world.MoveRight();
+      if(downDown) world.DropDown();
       keysLastUpdated = SDL_GetTicks();
     }
       
@@ -134,6 +135,10 @@ void Game::event_loop()
 	  case SDLK_UP:
 	    upDown = true;
 	    break;
+
+	  case SDLK_DOWN:
+	    downDown = true;
+	    break;
 	  }
 	break;
       case SDL_KEYUP:
@@ -148,6 +153,8 @@ void Game::event_loop()
 	  case SDLK_UP:
 	    upDown = false;
 	    break;
+	  case SDLK_DOWN:
+	    downDown = false;
 	  }
 	break;
       }

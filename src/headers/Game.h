@@ -30,7 +30,7 @@ private:
 
   Uint32 lastUpdated, keysLastUpdated = 0;
 
-  bool leftDown = false, rightDown = false, upDown = false;
+  bool leftDown = false, rightDown = false, upDown = false, downDown = false;
 };
 
 #endif //GAME_H
