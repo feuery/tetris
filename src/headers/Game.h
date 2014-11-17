@@ -28,7 +28,9 @@ private:
 
   TTF_Font *font;
 
-  Uint32 lastUpdated;
+  Uint32 lastUpdated, keysLastUpdated = 0;
+
+  bool leftDown = false, rightDown = false, upDown = false;
 };
 
 #endif //GAME_H

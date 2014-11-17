@@ -31,7 +31,7 @@ Game::Game(int w, int h): W(w), H(h), lastUpdated(0)
   atexit(TTF_Quit);
   running = true;
 
-  font = TTF_OpenFont("/usr/share/fonts/TTF/DejaVuSans.ttf", 16);
+  font = TTF_OpenFont("/usr/share/fonts/dejavu/DejaVuSans.ttf", 16);
   
   cout<<"Inited successfully"<<endl;
 }
@@ -71,8 +71,16 @@ void Game::update(World& world)
   if((SDL_GetTicks() - lastUpdated) > 1000)
     {
       world.MoveDown();
+      
       lastUpdated = SDL_GetTicks();
     }
+  if((SDL_GetTicks() - keysLastUpdated) > 200)
+    {
+      if(leftDown) world.MoveLeft();
+      if(rightDown) world.MoveRight();
+      keysLastUpdated = SDL_GetTicks();
+    }
+      
 }
 
 void Game::draw(SDL_Surface* window_surface, World& world)
@@ -100,9 +108,39 @@ void Game::event_loop()
   SDL_Event e;
 
   while(SDL_PollEvent(&e))
-    if(e.type == SDL_QUIT)
+    switch(e.type)
       {
+      case SDL_QUIT:
 	cout<<"Not running!"<<endl;
 	running = false;
+	break;
+      case SDL_KEYDOWN:
+	switch(e.key.keysym.sym)
+	  {
+	  case SDLK_LEFT:
+	    leftDown = true;
+	    break;
+	  case SDLK_RIGHT:
+	    rightDown = true;
+	    break;
+	  case SDLK_UP:
+	    upDown = true;
+	    break;
+	  }
+	break;
+      case SDL_KEYUP:
+	switch(e.key.keysym.sym)
+	  {
+	  case SDLK_LEFT:
+	    leftDown = false;
+	    break;
+	  case SDLK_RIGHT:
+	    rightDown = false;
+	    break;
+	  case SDLK_UP:
+	    upDown = false;
+	    break;
+	  }
+	break;
       }
 }

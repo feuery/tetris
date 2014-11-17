@@ -6,7 +6,7 @@
 #include <string.h>
 
 #include <SDL.h>
-#include <SDL2_gfxPrimitives.h>
+/* #include <SDL2_gfxPrimitives.h> */
 
 using namespace std;
 

@@ -21,6 +21,8 @@ public:
   }
 
   void MoveDown();
+  void MoveLeft();
+  void MoveRight();
 private:
   Block* data;
   Block current_block;

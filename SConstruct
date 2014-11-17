@@ -9,6 +9,7 @@ HEADERS = glob.glob('src/headers/*.h')
 
 env.Append(CCFLAGS = ['-g', '-Wall', '-std=c++11', '-Isrc/headers/'])
 
-env.Append(LIBS = ['SDL2_gfx', 'SDL2_ttf'])
+env.Append(LIBS = [# 'SDL2_gfx',
+                   'SDL2_ttf'])
 
 env.Program(target = 'bin/tetris', source = SOURCES)

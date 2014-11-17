@@ -54,3 +54,15 @@ void World::MoveDown()
 
   if(block_lowest_y < world_height) current_y++;
 }
+
+void World::MoveLeft()
+{
+  if(current_x > 0)
+    current_x--;
+}
+
+void World::MoveRight()
+{
+  if(current_x + current_block.Width() < data->Width())
+    current_x++;
+}
