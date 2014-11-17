@@ -166,7 +166,6 @@ bool Block::doesHorizontallyCollide_left(Block another, int x, int y) //World co
   for(int local_y = y;local_y< y + another.Height(); local_y++)
     {
       bool value = elementAt(low_x, local_y);
-      printf("%sound a collision at (%d, %d)\n", value? "F": "Not f", low_x, local_y);
       
       if(value) return true;
     }
@@ -182,9 +181,6 @@ bool Block::doesHorizontallyCollide_right(Block another, int x, int y) //World c
 
   for(int local_y = y ;local_y< y + another.Height(); local_y++)
     {
-      bool value = elementAt(high_x, local_y);
-      printf("%sound a collision at (%d, %d)\n", value? "F": "Not f", high_x, local_y);
-
       if(elementAt(high_x, local_y)) return true;
     }
 
