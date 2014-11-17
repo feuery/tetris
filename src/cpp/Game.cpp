@@ -26,12 +26,20 @@ Game::Game(int w, int h): W(w), H(h), lastUpdated(0)
     }
   
   this->window_surface = SDL_GetWindowSurface(this->window);
+  //@TODO fix this to be ./DejaVuSans.ttf in the released version...
+  font = TTF_OpenFont("/home/feuer/tetris/bin/DejaVuSans.ttf", 16);
 
+  if(!font)
+    {
+      printf("Loading font failed");
+      return;
+    }
+  
   atexit(SDL_Quit);
   atexit(TTF_Quit);
   running = true;
 
-  font = TTF_OpenFont("/usr/share/fonts/dejavu/DejaVuSans.ttf", 16);
+
   
   cout<<"Inited successfully"<<endl;
 }

@@ -62,10 +62,6 @@ SDL_Surface* World::Render()
   return  world_surface;		
 }
 
-vector<vector<int>> ZipVectors(vector<int> first, vector<int> second)
-{
-  
-}
 
 bool World::newBlockRequired()
 {
@@ -74,19 +70,60 @@ bool World::newBlockRequired()
   
   bool atBottom = block_lowest_y >= world_height;
 
-  vector<int> interesting_xs = range(current_x, current_x + current_block.Width());
-  
+  if(atBottom) return true;
+
+  //Here be dragons <3
+
+  vector<int> interesting_xs = range(0, current_block.Width() - 1);  
   vector<int> interesting_ys (interesting_xs.size(), 0);
-  
+
+  //Get the y-coordinates that have true in block above them
   transform(interesting_xs.begin(), interesting_xs.end(), interesting_ys.begin(),
-	    [&](int x) ->
+	    [&](int x) -> int
 	    {
 	      for(int y = current_block.Height()-1; y>-1; y--)
 		{
+		  // @TODO Verbose logging?
+		  // printf("Finding existing tiles from current_block (width %d, height %d) at %d, %d\n",
+		  // 	 current_block.Width(),
+		  // 	 current_block.Height(),
+		  // 	 x, y);
+			 
 		  if(current_block.elementAt(x, y)) return y + 1;
 		}
-	      return -1;
+	      return -1; //There's a full, vertical line of falses. I think this is impossible with the standard_blocks, but better safe than sorry
 	    });
+
+  //Remove the invalid coordinate pairs...
+  for(auto x_iter = interesting_xs.begin(), y_iter = interesting_ys.begin();
+      x_iter < interesting_xs.end() && y_iter < interesting_ys.end();
+      x_iter++)
+    {
+
+      if(*y_iter == -1)
+	{
+	  interesting_ys.erase(y_iter);
+	  interesting_xs.erase(x_iter);
+	}
+      
+      y_iter++;
+    }
+
+  vector<int> interesting_world_xs (interesting_xs.size(), 0);
+  vector<int> interesting_world_ys (interesting_ys.size(), 0);
+  
+  transform(interesting_xs.begin(), interesting_xs.end(), interesting_world_xs.begin(), [&](int x) -> int { return x + current_x;});
+  transform(interesting_ys.begin(), interesting_ys.end(), interesting_world_ys.begin(), [&](int y) -> int { return y + current_y;});
+
+  for(unsigned int i =0; i<interesting_world_xs.size(); i++)
+    {
+      int x = interesting_world_xs.at(i),
+	y = interesting_world_ys.at(i);
+
+      if(elementAt(x,y)) return true;
+    }
+
+  return false;
   
   // naitetaan xs ja ys [[x y] [x y]] - pareiksi
   // filtteröidään pois ne, joiden y == -1
@@ -97,8 +134,7 @@ bool World::newBlockRequired()
 
 void World::MoveDown()
 {
-
-  if() current_y++;
+  if(!newBlockRequired()) current_y++;
 }
 
 void World::MoveLeft()
