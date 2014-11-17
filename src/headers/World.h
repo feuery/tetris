@@ -24,6 +24,9 @@ public:
   void MoveLeft();
   void MoveRight();
 private:
+
+  bool newBlockRequired();
+  
   Block* data;
   Block current_block;
 

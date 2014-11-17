@@ -4,7 +4,22 @@
 #include <iostream>
 #include <cstdlib>
 
+#include <vector>
+#include <algorithm>
+
 using namespace std;
+
+//inclusive, [start, end]
+vector<int> range(int start, int end)
+{
+  vector<int> toret;
+
+  for(int i=start; i<=end; i++)
+    {
+      toret.push_back(i);
+    }
+  return toret;
+}
 
 standard_blocks b;
 
@@ -47,12 +62,43 @@ SDL_Surface* World::Render()
   return  world_surface;		
 }
 
-void World::MoveDown()
+vector<vector<int>> ZipVectors(vector<int> first, vector<int> second)
+{
+  
+}
+
+bool World::newBlockRequired()
 {
   int world_height = data->Height(),
     block_lowest_y = current_y + current_block.Height();
+  
+  bool atBottom = block_lowest_y >= world_height;
 
-  if(block_lowest_y < world_height) current_y++;
+  vector<int> interesting_xs = range(current_x, current_x + current_block.Width());
+  
+  vector<int> interesting_ys (interesting_xs.size(), 0);
+  
+  transform(interesting_xs.begin(), interesting_xs.end(), interesting_ys.begin(),
+	    [&](int x) ->
+	    {
+	      for(int y = current_block.Height()-1; y>-1; y--)
+		{
+		  if(current_block.elementAt(x, y)) return y + 1;
+		}
+	      return -1;
+	    });
+  
+  // naitetaan xs ja ys [[x y] [x y]] - pareiksi
+  // filtteröidään pois ne, joiden y == -1
+  // lisätään jokaiseen x:ään current_x
+  // lisätään jokaiseen y:hyn current_y
+  // tarkistetaan World::elementAt:llä onko yksikään koordinaattipareista true?
+}
+
+void World::MoveDown()
+{
+
+  if() current_y++;
 }
 
 void World::MoveLeft()
