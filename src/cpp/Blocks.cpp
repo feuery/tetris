@@ -193,8 +193,21 @@ Block Block::Rotate()
 
   for(int x=0; x<W; x++)
     for(int y=0; y<H; y++)
-      toret.set(y,x, elementAt(x,y));
+      {
+	// int local_x = W-1-y;
+	// printf("(x) = (%d), size is (%d)\n",
+	//        local_x, W);
+	
+	toret.set(y,x, elementAt(x, y)); 
+      }
 
+  // for(unsigned int i = 0; i < vertical_rows.size(); i++)
+  //   {
+  //     printf("Doing a side-effect\n");
+  //     vertical_rows.at(i).Reverse(); //Because side effects
+  //   }
+  
   toret.Current_Block = Current_Block;
   return toret;
 }
+

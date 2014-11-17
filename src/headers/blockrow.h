@@ -10,6 +10,8 @@ class Blockrow{
 public:
   Blockrow(int length);
   bool elementAt(int at);
+
+  void Reverse(); //Destructive
   
 private:
 
