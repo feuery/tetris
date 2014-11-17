@@ -155,3 +155,32 @@ SDL_Surface* Block::Render()
 
     return toret;
 }
+
+
+bool Block::doesHorizontallyCollide_left(Block another, int x, int y) //World coords, not another-coords
+{
+  int low_x = x-1;
+
+  if(low_x<0) return true;
+
+  for(int local_y ;local_y< y + another.Height(); local_y++)
+    {
+      if(elementAt(low_x, local_y)) return true;
+    }
+  
+  return false;
+}
+
+bool Block::doesHorizontallyCollide_right(Block another, int x, int y) //World coords, not another-coords
+{
+  int high_x = x + another.Width();
+
+  if(high_x >= Width()) return true;
+
+  for(int local_y ;local_y< y + another.Height(); local_y++)
+    {
+      if(elementAt(high_x, local_y)) return true;
+    }
+
+  return false;
+}

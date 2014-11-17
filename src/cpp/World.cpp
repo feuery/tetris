@@ -119,12 +119,6 @@ bool World::newBlockRequired()
     }
 
   return false;
-  
-  // naitetaan xs ja ys [[x y] [x y]] - pareiksi
-  // filtteröidään pois ne, joiden y == -1
-  // lisätään jokaiseen x:ään current_x
-  // lisätään jokaiseen y:hyn current_y
-  // tarkistetaan World::elementAt:llä onko yksikään koordinaattipareista true?
 }
 
 void World::MoveDown()
@@ -146,12 +140,13 @@ void World::MoveDown()
 
 void World::MoveLeft()
 {
-  if(current_x > 0)
+  if(current_x > 0 && !data.doesHorizontallyCollide_left(current_block, current_x, current_y))
     current_x--;
 }
 
 void World::MoveRight()
 {
-  if(current_x + current_block.Width() < data.Width())
+  if(current_x + current_block.Width() < data.Width() &&
+     !data.doesHorizontallyCollide_right(current_block, current_x, current_y))
     current_x++;
 }

@@ -32,10 +32,13 @@ public:
 
 
   string toString();
+
+  bool doesHorizontallyCollide_right(Block another, int x, int y);
+  bool doesHorizontallyCollide_left(Block another, int x, int y);
 private:
   vector<Blockrow> vertical_rows;
   int W, H;
-  
+
 };
 
 #endif //BLOCKS_H
