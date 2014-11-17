@@ -23,11 +23,13 @@ public:
   void MoveLeft();
   void MoveRight();
   void DropDown();
-
+  
   void RotateCurrent();
 private:
 
   bool newBlockRequired();
+
+  void handleFullRows();
 
   //WTF for was this a pointer?
   Block data;

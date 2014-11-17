@@ -211,3 +211,30 @@ Block Block::Rotate()
   return toret;
 }
 
+template <class BidirectionalIterator>
+  void reverse (BidirectionalIterator first, BidirectionalIterator last)
+{
+  while ((first!=last)&&(first!=--last)) {
+    std::iter_swap (first,last);
+    ++first;
+  }
+}
+
+void Block::InsertFront()
+{
+  vector<Blockrow> data = vertical_rows;
+  reverse(data.begin(), data.end());
+  data.push_back(Blockrow(H));
+  reverse(data.begin(), data.end());
+  vertical_rows = data;
+}
+
+void Block::DropAt(vector<Blockrow>::iterator n)
+{
+  vertical_rows.erase(n);
+}
+
+vector<Blockrow>::iterator Block::begin()
+{
+  return vertical_rows.begin();
+}

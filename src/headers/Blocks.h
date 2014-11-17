@@ -37,6 +37,12 @@ public:
   bool doesHorizontallyCollide_left(Block another, int x, int y);
 
   Block Rotate();
+
+  void InsertFront();
+  void DropAt(vector<Blockrow>::iterator n);
+
+  vector<Blockrow>::iterator begin();
+  
 private:
   vector<Blockrow> vertical_rows;
   int W, H;

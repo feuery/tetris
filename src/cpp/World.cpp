@@ -121,11 +121,36 @@ bool World::newBlockRequired()
   return false;
 }
 
+void World::handleFullRows()
+{
+  auto iterator = data.begin();
+  int removed = 0;
+  for(int y = 0; y<data.Height(); y++)
+    {
+      bool removable = true;
+      for(int x = 0; x<data.Width(); x++)
+	{
+	  if(!data.elementAt(x,y)) removable = false;
+	}
+      if(removable)
+	{
+	  data.DropAt(iterator);
+	  removed++;
+	}
+      iterator++;
+    }
+
+  for(int i=0; i<removed; i++)
+    data.InsertFront();
+}
+
 void World::MoveDown()
 {
   if(!newBlockRequired()) current_y++;
   else
     {
+      handleFullRows();
+      
       current_block.Current_Block = false;
 
       data = data.merge(current_block, current_x, current_y);
@@ -161,3 +186,4 @@ void World::RotateCurrent()
 {
   current_block = current_block.Rotate();
 }
+
