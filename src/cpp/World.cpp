@@ -140,13 +140,14 @@ void World::MoveDown()
 
 void World::MoveLeft()
 {
-  if(current_x > 0 && !data.doesHorizontallyCollide_left(current_block, current_x, current_y))
+  if(// current_x > 0 || 
+     !data.doesHorizontallyCollide_left(current_block, current_x, current_y))
     current_x--;
 }
 
 void World::MoveRight()
 {
-  if(current_x + current_block.Width() < data.Width() &&
+  if(// current_x + current_block.Width() < data.Width() ||
      !data.doesHorizontallyCollide_right(current_block, current_x, current_y))
     current_x++;
 }
