@@ -28,29 +28,24 @@ double RAND(double min, double max)
     return (double)rand()/(double)RAND_MAX * (max - min) + min;
 }
 
-World::World(int W, int H): data(new Block(W, H)), current_block( b.get_standard_block(RAND(0, b.count())))
+World::World(int W, int H): data(Block(W, H)), current_block( b.get_standard_block(RAND(0, b.count())))
 {
   current_block.Current_Block = true;
 }
 
-World::~World()
-{
-  delete data;;
-}
-
 bool World::elementAt(int x, int y)
 {
-  return data->elementAt(x,y);
+  return data.elementAt(x,y);
 }
 
 void World::merge(Block block, int x, int y)
 {
-  *data = data->merge(block, x, y);
+  data = data.merge(block, x, y);
 }
 
 SDL_Surface* World::Render()
 {
-  SDL_Surface* world_surface = data->Render();
+  SDL_Surface* world_surface = data.Render();
   SDL_Surface* current_surface = current_block.Render();
 
   SDL_Rect current_location = {current_x * 50, current_y * 50, 0, 0};
@@ -65,7 +60,7 @@ SDL_Surface* World::Render()
 
 bool World::newBlockRequired()
 {
-  int world_height = data->Height(),
+  int world_height = data.Height(),
     block_lowest_y = current_y + current_block.Height();
   
   bool atBottom = block_lowest_y >= world_height;
@@ -135,6 +130,17 @@ bool World::newBlockRequired()
 void World::MoveDown()
 {
   if(!newBlockRequired()) current_y++;
+  else
+    {
+      current_block.Current_Block = false;
+
+      data = data.merge(current_block, current_x, current_y);
+      
+      current_x = 0;
+      current_y = 0;
+
+      current_block = b.get_standard_block(RAND(0, b.count()));
+    }      
 }
 
 void World::MoveLeft()
@@ -145,6 +151,6 @@ void World::MoveLeft()
 
 void World::MoveRight()
 {
-  if(current_x + current_block.Width() < data->Width())
+  if(current_x + current_block.Width() < data.Width())
     current_x++;
 }

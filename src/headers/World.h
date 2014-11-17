@@ -7,7 +7,6 @@
 class World{
 public:
   World(int W, int H); //In tiles
-  ~World();
 
   bool elementAt(int x, int Y);
 
@@ -17,7 +16,7 @@ public:
   SDL_Surface* Render();
   string toString()
   {
-    return data->toString();
+    return data.toString();
   }
 
   void MoveDown();
@@ -26,8 +25,9 @@ public:
 private:
 
   bool newBlockRequired();
-  
-  Block* data;
+
+  //WTF for was this a pointer?
+  Block data;
   Block current_block;
 
   int current_x = 0, current_y = 0;
