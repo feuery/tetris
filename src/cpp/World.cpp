@@ -156,3 +156,8 @@ void World::MoveRight()
      !data.doesHorizontallyCollide_right(current_block, current_x, current_y))
     current_x++;
 }
+
+void World::RotateCurrent()
+{
+  current_block = current_block.Rotate();
+}

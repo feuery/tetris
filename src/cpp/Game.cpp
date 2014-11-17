@@ -87,6 +87,7 @@ void Game::update(World& world)
       if(leftDown) world.MoveLeft();
       if(rightDown) world.MoveRight();
       if(downDown) world.DropDown();
+      if(upDown) world.RotateCurrent();
       keysLastUpdated = SDL_GetTicks();
     }
       

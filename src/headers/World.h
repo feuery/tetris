@@ -23,6 +23,8 @@ public:
   void MoveLeft();
   void MoveRight();
   void DropDown();
+
+  void RotateCurrent();
 private:
 
   bool newBlockRequired();

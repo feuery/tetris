@@ -186,3 +186,15 @@ bool Block::doesHorizontallyCollide_right(Block another, int x, int y) //World c
 
   return false;
 }
+
+Block Block::Rotate()
+{
+  Block toret(H, W);
+
+  for(int x=0; x<W; x++)
+    for(int y=0; y<H; y++)
+      toret.set(y,x, elementAt(x,y));
+
+  toret.Current_Block = Current_Block;
+  return toret;
+}
