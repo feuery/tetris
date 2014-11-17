@@ -142,10 +142,13 @@ SDL_Surface* Block::Render()
 	    SDL_Rect rect = {x * 50 +5, y * 50 + 5, 40, 40};
 	    SDL_FillRect(toret, &rect,
 			 elementAt(x,y)?
-			 Current_Block?
-			 SDL_MapRGB(toret->format, 255, 0, 0):
-			 SDL_MapRGB(toret->format, 255, 255, 0):
-			 SDL_MapRGB(toret->format, 0, 0, 255)
+			    Current_Block?
+			      SDL_MapRGB(toret->format, 255, 0, 0):
+			      SDL_MapRGB(toret->format, 255, 255, 0):
+			    Current_Block?
+			      SDL_MapRGBA(toret->format, 0, 0, 0, 0):
+			      SDL_MapRGB(toret->format, 0, 0, 255)
+			    
 			 ); //@TODO: Write custom colours for each block...
 	  }
       }

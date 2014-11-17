@@ -140,6 +140,7 @@ void World::MoveDown()
       current_y = 0;
 
       current_block = b.get_standard_block(RAND(0, b.count()));
+      current_block.Current_Block = true;
     }      
 }
 
