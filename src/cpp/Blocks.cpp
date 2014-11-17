@@ -58,16 +58,7 @@ Block::Block(int W, int H, vector<vector<bool>> values): W(W), H(H)
 
 bool Block::elementAt(int x, int y)
 {
-  // try
-  //   {
       return vertical_rows.at(x).elementAt(y);
-  //   }
-  // catch(out_of_range ex)
-  //   {
-  //     cout<<"Out of range@ Block::elementAt(int,int)"<<endl;
-  //     cout<<"x & width: " << x<<", "<<vertical_rows.size()<<endl;
-  //     throw ex;
-  //   }
 }
 
 Block Block::set(int x, int y, bool value)
@@ -122,7 +113,9 @@ SDL_Surface* Block::Render()
 	    SDL_Rect rect = {x * 50 +5, y * 50 + 5, 40, 40};
 	    SDL_FillRect(toret, &rect,
 			 elementAt(x,y)?
-			 SDL_MapRGB(toret->format, 255, 0, 0) :
+			 Current_Block?
+			 SDL_MapRGB(toret->format, 255, 0, 0):
+			 SDL_MapRGB(toret->format, 255, 255, 0):
 			 SDL_MapRGB(toret->format, 0, 0, 255)
 			 ); //@TODO: Write custom colours for each block...
 	  }
