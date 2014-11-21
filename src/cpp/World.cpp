@@ -21,6 +21,11 @@ vector<int> range(int start, int end)
   return toret;
 }
 
+string World::toString()
+{
+  return data.toString();
+}
+
 standard_blocks b;
 
 double RAND(double min, double max)

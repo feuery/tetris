@@ -14,10 +14,7 @@ public:
   void merge(Block block, int x, int y);
 
   SDL_Surface* Render();
-  string toString()
-  {
-    return data.toString();
-  }
+  string toString();
 
   void MoveDown();
   void MoveLeft();

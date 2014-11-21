@@ -212,7 +212,7 @@ Block Block::Rotate()
 }
 
 template <class BidirectionalIterator>
-  void reverse (BidirectionalIterator first, BidirectionalIterator last)
+  void doReverse (BidirectionalIterator first, BidirectionalIterator last)
 {
   while ((first!=last)&&(first!=--last)) {
     std::iter_swap (first,last);
@@ -223,9 +223,9 @@ template <class BidirectionalIterator>
 void Block::InsertFront()
 {
   vector<Blockrow> data = vertical_rows;
-  reverse(data.begin(), data.end());
+  doReverse(data.begin(), data.end());
   data.push_back(Blockrow(H));
-  reverse(data.begin(), data.end());
+  doReverse(data.begin(), data.end());
   vertical_rows = data;
 }
 
