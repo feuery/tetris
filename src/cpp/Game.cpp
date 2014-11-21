@@ -27,7 +27,8 @@ Game::Game(int w, int h): W(w), H(h), lastUpdated(0)
   
   this->window_surface = SDL_GetWindowSurface(this->window);
   //@TODO fix this to be ./DejaVuSans.ttf in the released version...
-  font = TTF_OpenFont("/home/feuer/tetris/bin/DejaVuSans.ttf", 16);
+  // font = TTF_OpenFont("/home/feuer/tetris/bin/DejaVuSans.ttf", 16);
+  font = TTF_OpenFont("/Users/feuer2/tetris/bin/DejaVuSans.ttf", 16);
 
   if(!font)
     {
