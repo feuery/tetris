@@ -123,7 +123,7 @@ bool World::newBlockRequired()
 
 void World::handleFullRows()
 {
-  auto iterator = data.begin();
+  // auto iterator = data.begin();
   int removed = 0;
   for(int y = 0; y<data.Height(); y++)
     {
@@ -134,10 +134,9 @@ void World::handleFullRows()
 	}
       if(removable)
 	{
-	  data.DropAt(iterator);
+	  data.DropAt(y);
 	  removed++;
 	}
-      iterator++;
     }
 
   for(int i=0; i<removed; i++)
@@ -148,9 +147,7 @@ void World::MoveDown()
 {
   if(!newBlockRequired()) current_y++;
   else
-    {
-      handleFullRows();
-      
+    {      
       current_block.Current_Block = false;
 
       data = data.merge(current_block, current_x, current_y);

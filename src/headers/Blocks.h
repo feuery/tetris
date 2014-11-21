@@ -39,7 +39,7 @@ public:
   Block Rotate();
 
   void InsertFront();
-  void DropAt(vector<Blockrow>::iterator n);
+  void DropAt(int y);//vector<Blockrow>::iterator n);
 
   vector<Blockrow>::iterator begin();
   

@@ -79,7 +79,7 @@ void Game::update(World& world)
   if((SDL_GetTicks() - lastUpdated) > 1000)
     {
       world.MoveDown();
-      
+      world.handleFullRows();
       lastUpdated = SDL_GetTicks();
     }
   if((SDL_GetTicks() - keysLastUpdated) > 200)

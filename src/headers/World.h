@@ -25,11 +25,11 @@ public:
   void DropDown();
   
   void RotateCurrent();
+  void handleFullRows();
+
 private:
 
   bool newBlockRequired();
-
-  void handleFullRows();
 
   //WTF for was this a pointer?
   Block data;

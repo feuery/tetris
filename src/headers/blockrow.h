@@ -11,6 +11,8 @@ public:
   Blockrow(int length);
   bool elementAt(int at);
 
+  void dropAt(int y);
+
   void Reverse(); //Destructive
   
 private:

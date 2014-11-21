@@ -229,9 +229,13 @@ void Block::InsertFront()
   vertical_rows = data;
 }
 
-void Block::DropAt(vector<Blockrow>::iterator n)
+void Block::DropAt(int y)// vector<Blockrow>::iterator n)
 {
-  vertical_rows.erase(n);
+  for(int x=0; x<W; x++)
+    {
+      printf("Dropping item at (%d, %d)\n", x, y);
+      vertical_rows.at(x).dropAt(y);
+    }
 }
 
 vector<Blockrow>::iterator Block::begin()

@@ -45,3 +45,14 @@ void Blockrow::Reverse()
 
   printf("REVERSED!\n");
 }
+
+void Blockrow:: dropAt(int y)
+{
+  //Siirretään kaikkea <= y:n yhdellä eteenpäin?
+
+  for(; y>0; y--)
+    {
+      data.get()[y] = data.get()[y-1];
+    }
+  data.get()[y] = false;
+}
