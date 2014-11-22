@@ -82,7 +82,7 @@ void Game::update(World& world)
       if((SDL_GetTicks() - lastUpdated) > 1000)
 	{
 	  world.MoveDown();
-	  world.handleFullRows();
+	  world.handleFullRows(score);
 	  lastUpdated = SDL_GetTicks();
 	}
       if((SDL_GetTicks() - keysLastUpdated) > 200)
@@ -113,11 +113,17 @@ void Game::draw(SDL_Surface* window_surface, World& world)
   //Stack allocator wouldn't be bad...
   if(world.gameLost())
     {
-      SDL_Surface* text = TTF_RenderUTF8_Solid(font, lost.c_str(), {0xFF, 0xFF, 0});
+      SDL_Surface* text = TTF_RenderUTF8_Solid(font, lost.c_str(), {0xFF, 0, 0});
       SDL_Rect text_location = {half_w - text->w / 2, window_surface->h / 2, 0, 0};
       SDL_BlitSurface(text, NULL, window_surface, &text_location);
       SDL_FreeSurface(text);
     }
+
+  SDL_Surface* scoretext = TTF_RenderUTF8_Solid(font, ("Score: " + std::to_string(score)).c_str(), {0xFF,0xFF,0xFF});
+
+  SDL_BlitSurface(scoretext, NULL, window_surface, NULL);
+
+  SDL_FreeSurface(scoretext);
 
   // cout<<world.toString()<<endl; @TODO: A verbose - flag?
   

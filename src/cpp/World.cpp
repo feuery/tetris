@@ -126,7 +126,7 @@ bool World::newBlockRequired()
   return false;
 }
 
-void World::handleFullRows()
+void World::handleFullRows(int& score_to_update)
 {
   // auto iterator = data.begin();
   int removed = 0;
@@ -146,6 +146,8 @@ void World::handleFullRows()
 
   for(int i=0; i<removed; i++)
     data.InsertFront();
+
+  score_to_update += (removed * data.Width() * 10);
 }
 
 void World::MoveDown()

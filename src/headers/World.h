@@ -24,7 +24,7 @@ public:
   void DropDown();
   
   void RotateCurrent();
-  void handleFullRows();
+  void handleFullRows(int& score_to_update);
 
 private:
 

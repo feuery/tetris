@@ -26,6 +26,8 @@ private:
   bool running = false;
   int W, H; //pixels
 
+  int score = 0;
+
   TTF_Font *font;
 
   Uint32 lastUpdated, keysLastUpdated = 0;
