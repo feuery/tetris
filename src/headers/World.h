@@ -16,6 +16,8 @@ public:
   SDL_Surface* Render();
   string toString();
 
+  bool gameLost();
+
   void MoveDown();
   void MoveLeft();
   void MoveRight();

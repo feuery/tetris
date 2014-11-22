@@ -26,9 +26,9 @@ Game::Game(int w, int h): W(w), H(h), lastUpdated(0)
     }
   
   this->window_surface = SDL_GetWindowSurface(this->window);
-  //@TODO fix this to be ./DejaVuSans.ttf in the released version...
-  // font = TTF_OpenFont("/home/feuer/tetris/bin/DejaVuSans.ttf", 16);
-  font = TTF_OpenFont("/Users/feuer2/tetris/bin/DejaVuSans.ttf", 16);
+  //@TODO fix this to be ./DejaVuSans-Bold.ttf in the released version...
+  // font = TTF_OpenFont("/home/feuer/tetris/bin/DejaVuSans-Bold.ttf", 16);
+  font = TTF_OpenFont("/Users/feuer2/tetris/bin/DejaVuSans-Bold.ttf", 30);
 
   if(!font)
     {
@@ -77,22 +77,26 @@ void Game::Run()
 
 void Game::update(World& world)
 {
-  if((SDL_GetTicks() - lastUpdated) > 1000)
+  if(!world.gameLost())
     {
-      world.MoveDown();
-      world.handleFullRows();
-      lastUpdated = SDL_GetTicks();
-    }
-  if((SDL_GetTicks() - keysLastUpdated) > 200)
-    {
-      if(leftDown) world.MoveLeft();
-      if(rightDown) world.MoveRight();
-      if(downDown) world.DropDown();
-      if(upDown) world.RotateCurrent();
-      keysLastUpdated = SDL_GetTicks();
-    }
-      
+      if((SDL_GetTicks() - lastUpdated) > 1000)
+	{
+	  world.MoveDown();
+	  world.handleFullRows();
+	  lastUpdated = SDL_GetTicks();
+	}
+      if((SDL_GetTicks() - keysLastUpdated) > 200)
+	{
+	  if(leftDown) world.MoveLeft();
+	  if(rightDown) world.MoveRight();
+	  if(downDown) world.DropDown();
+	  if(upDown) world.RotateCurrent();
+	  keysLastUpdated = SDL_GetTicks();
+	}
+    }      
 }
+
+string lost = "HÄVISIT!";
 
 void Game::draw(SDL_Surface* window_surface, World& world)
 {
@@ -106,6 +110,14 @@ void Game::draw(SDL_Surface* window_surface, World& world)
   SDL_Rect rect = {x, 0, 0, 0};
   
   SDL_BlitSurface(world_image, NULL, window_surface, &rect);
+  //Stack allocator wouldn't be bad...
+  if(world.gameLost())
+    {
+      SDL_Surface* text = TTF_RenderUTF8_Solid(font, lost.c_str(), {0xFF, 0xFF, 0});
+      SDL_Rect text_location = {half_w - text->w / 2, window_surface->h / 2, 0, 0};
+      SDL_BlitSurface(text, NULL, window_surface, &text_location);
+      SDL_FreeSurface(text);
+    }
 
   // cout<<world.toString()<<endl; @TODO: A verbose - flag?
   

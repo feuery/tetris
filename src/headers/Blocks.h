@@ -42,6 +42,8 @@ public:
   void DropAt(int y);//vector<Blockrow>::iterator n);
 
   vector<Blockrow>::iterator begin();
+
+  bool topContainsTile();
   
 private:
   vector<Blockrow> vertical_rows;

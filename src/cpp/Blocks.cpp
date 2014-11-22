@@ -242,3 +242,12 @@ vector<Blockrow>::iterator Block::begin()
 {
   return vertical_rows.begin();
 }
+
+bool Block::topContainsTile()
+{
+  for(int x=0; x<W; x++)
+    {
+      if(elementAt(x, 0)) return true;
+    }
+  return false;
+}

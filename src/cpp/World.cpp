@@ -189,3 +189,7 @@ void World::RotateCurrent()
   current_block = current_block.Rotate();
 }
 
+bool World::gameLost()
+{
+  return data.topContainsTile();
+}
