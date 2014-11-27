@@ -187,6 +187,18 @@ bool Block::doesHorizontallyCollide_right(Block another, int x, int y) //World c
   return false;
 }
 
+template <typename T>
+vector<T> reverse(vector<T> vec)
+{
+  vector<T> toret;
+
+  for(auto iter = vec.end()-1; iter>= vec.begin(); iter--)
+    {
+      toret.push_back(*iter);
+    }
+  return toret;
+}
+
 Block Block::Rotate()
 {
   Block toret(H, W);
@@ -196,14 +208,9 @@ Block Block::Rotate()
       {
 	toret.set(y,x, elementAt(x, y)); 
       }
-
-  for(unsigned int i = 0; i < vertical_rows.size(); i++)
-    {
-      printf("Doing a side-effect\n");
-      vertical_rows.at(i).Reverse(); //Because side effects
-    }
   
   toret.Current_Block = Current_Block;
+  toret.vertical_rows = reverse(toret.vertical_rows);
   return toret;
 }
 
