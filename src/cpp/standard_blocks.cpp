@@ -54,7 +54,6 @@ Block standard_blocks::get_standard_block(int n)
 	[0 1]
 	[1 1]]] */
 
-  cout<<"In standard_blocks::get_standard_block(int), n is "<<n<<endl;
   
   if(blocks.size()==0)
     {
@@ -97,6 +96,12 @@ Block standard_blocks::get_standard_block(int n)
 	  true},
 	 {true, true, true}};
 
+      bool seittemäs [][3] =
+	{{false,
+	  true},
+	 {true, true},
+	 {false, true}};
+
       int rowCounter = 0;
 
       try
@@ -114,6 +119,9 @@ Block standard_blocks::get_standard_block(int n)
 	  rowCounter++;
 	  blocks.push_back(Block(2,3, toVector(kuudes)));
 	  rowCounter++;
+	  blocks.push_back(Block(2,3, toVector(seittemäs)));
+	  rowCounter++;
+			   
 	}
       catch(out_of_range ex)
 	{
@@ -121,6 +129,5 @@ Block standard_blocks::get_standard_block(int n)
 	}
     }
 
-  cout<<"Returning block at " << n << endl;
   return blocks.at(n);
 }

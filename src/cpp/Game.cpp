@@ -59,11 +59,7 @@ Game::~Game()
 
 void Game::Run()
 {
-  cout<<"At Game::Run()|W: "<<W<<endl;
-  int width = 8; //(W/50) - 3;
-
-  cout<<"JEEE"<<width<<endl;
-  
+  int width = (W/50) - 3; 
   
   World world(width, H/50);
   cout<<"World is ready!"<<endl;

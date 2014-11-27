@@ -79,19 +79,12 @@ Block Block::set(int x, int y, bool value)
   return toret; //And this hopefully copies the local object instead of returning garbage
 }
 
-/*
-  printf("Looping... x,y = %d, %d @ Block::merge\n", local_x, local_y);
-  printf("Values going to elementAt(%d, %d)\n", local_x, local_y-other.H);
-*/
-
 Block Block::merge(Block other, int x, int y)
 {
   Block toret(W, H);
   toret.vertical_rows = vertical_rows;
 
   int otherx = 0;
-
-  printf("Other block: %s\n", other.toString().c_str());
   
   for(int local_x = x; local_x < x + other.Width(); local_x++)
     {
@@ -101,18 +94,11 @@ Block Block::merge(Block other, int x, int y)
 	  if(!elementAt(local_x, local_y))
 	    {
 	      set(local_x, local_y, other.elementAt(otherx, othery));
-	  
-	      printf("Merging %s from (%d, %d) to (%d, %d)\n", other.elementAt(otherx, othery)? "true": "false",
-		     otherx, othery,
-		     local_x, local_y);
 	    }
 	  othery++;
 	}
       otherx++;
     }
-  printf("Blocks merged!");
-
-  printf("World: %s\n, merged at (%d, %d)", toString().c_str(), x, y);
 
   return toret;    
 }
@@ -236,7 +222,6 @@ void Block::DropAt(int y)// vector<Blockrow>::iterator n)
 {
   for(int x=0; x<W; x++)
     {
-      printf("Dropping item at (%d, %d)\n", x, y);
       vertical_rows.at(x).dropAt(y);
     }
 }
