@@ -20,14 +20,14 @@ string Block::toString()
 }
 
 int  Block::Width()
-    {
-      return W;
-    }
+{
+  return W;
+}
 
-  int  Block::Height()
-  {
-    return H;
-  }
+int  Block::Height()
+{
+  return H;
+}
   
 Block::Block(int W, int H): W(W), H(H)
 {

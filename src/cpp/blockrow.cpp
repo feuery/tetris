@@ -41,9 +41,13 @@ T* reverse_string(T *str, size_t len)
 
 void Blockrow::Reverse()
 {
-  data = shared_ptr<bool>(reverse_string<bool>(data.get(), length));
+  bool* newData = new bool[length];
+  for(int i =0; i<length; i++)
+    {
+      newData[i] = data.get()[length-i];
+    }
 
-  printf("REVERSED!\n");
+  data = shared_ptr<bool>(newData);
 }
 
 void Blockrow:: dropAt(int y)
