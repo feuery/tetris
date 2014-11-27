@@ -1,5 +1,4 @@
 #include <SDL.h>
-// #include <SDL2_gfxPrimitives.h>
 #include <Game.h>
 
 #include <cstdlib>
@@ -7,7 +6,7 @@
 
 using namespace std;
 
-const int W = 800, H = 600;
+const int W = 600, H = 600;
 
 int main(int argc, char** argh)
 {
