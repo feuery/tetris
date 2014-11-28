@@ -12,7 +12,7 @@ Game::Game(int w, int h): W(w), H(h), lastUpdated(0)
       return;
     }
 
-  window = SDL_CreateWindow("SDL-testi", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, W, H, SDL_WINDOW_SHOWN);
+  window = SDL_CreateWindow("Feuer-tetris", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, W, H, SDL_WINDOW_SHOWN);
   if (window == nullptr)
     {
       printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );
@@ -26,9 +26,7 @@ Game::Game(int w, int h): W(w), H(h), lastUpdated(0)
     }
   
   this->window_surface = SDL_GetWindowSurface(this->window);
-  //@TODO fix this to be ./DejaVuSans-Bold.ttf in the released version...
-  // font = TTF_OpenFont("/home/feuer/tetris/bin/DejaVuSans-Bold.ttf", 16);
-  font = TTF_OpenFont("/Users/feuer2/tetris/bin/DejaVuSans-Bold.ttf", 30);
+  font = TTF_OpenFont("./DejaVuSans-Bold.ttf", 30);
 
   if(!font)
     {
