@@ -3,6 +3,16 @@
 
 using namespace std;
 
+#include <sstream>
+
+template <typename T>
+std::string to_string(T value)
+{
+	std::ostringstream os;
+	os << value;
+	return os.str();
+}
+
 Game::Game(int w, int h): W(w), H(h), lastUpdated(0)
 {
   cout<<"Initing everything"<<endl;
@@ -113,7 +123,7 @@ void Game::draw(SDL_Surface* window_surface, World& world)
       SDL_FreeSurface(text);
     }
 
-  SDL_Surface* scoretext = TTF_RenderUTF8_Solid(font, ("Score: " + std::to_string(score)).c_str(), {0xFF,0xFF,0xFF});
+  SDL_Surface* scoretext = TTF_RenderUTF8_Solid(font, ("Score: " + to_string(score)).c_str(), {0xFF,0xFF,0xFF});
 
   SDL_BlitSurface(scoretext, NULL, window_surface, NULL);
 
