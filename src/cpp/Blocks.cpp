@@ -178,10 +178,12 @@ vector<T> reverse(vector<T> vec)
 {
   vector<T> toret;
 
-  for(auto iter = vec.end()-1; iter>= vec.begin(); iter--)
-    {
-      toret.push_back(*iter);
-    }
+  //Iterators seem to be broken on VC++13
+  for (int i = vec.size()-1; i >= 0; i--)
+  {
+	  toret.push_back(vec.at(i));
+  }
+  
   return toret;
 }
 

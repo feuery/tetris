@@ -105,7 +105,6 @@ bool World::newBlockRequired()
 	  interesting_ys.erase(y_iter);
 	  interesting_xs.erase(x_iter);
 	}
-      
       y_iter++;
     }
 
@@ -146,8 +145,11 @@ void World::handleFullRows(int& score_to_update)
 
   for(int i=0; i<removed; i++)
     data.InsertFront();
+  int toAdd = (removed * data.Width() * 10);
 
-  score_to_update += (removed * data.Width() * 10);
+  score_to_update += toAdd;
+
+  printf("Added %d to score\n", toAdd);
 }
 
 void World::MoveDown()

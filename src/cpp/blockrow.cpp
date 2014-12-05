@@ -5,8 +5,13 @@
 
 using namespace std;
 
-Blockrow::Blockrow(int length): length(length), data(new bool[length] {false}){ }
-  
+Blockrow::Blockrow(int length): length(length), data(new bool[length] {false})
+{
+	for (int x = 0; x < length; x++)
+	{
+		data.get()[x] = false; //Initializers are broken in Visual C++13
+	}
+}  
 
 bool Blockrow::elementAt(int at)
 {

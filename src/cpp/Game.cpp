@@ -71,6 +71,9 @@ void Game::Run()
   
   World world(width, H/50);
   cout<<"World is ready!"<<endl;
+  printf("World looks like\n%s\n", world.data.toString().c_str());
+  printf("Pysähdy, typerä softa!");
+  
   while(initialized())
     {
       update(world);

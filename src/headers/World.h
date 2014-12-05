@@ -26,12 +26,13 @@ public:
   void RotateCurrent();
   void handleFullRows(int& score_to_update);
 
+  //WTF for was this a pointer?
+  Block data;
+
 private:
 
   bool newBlockRequired();
 
-  //WTF for was this a pointer?
-  Block data;
   Block current_block;
 
   int current_x = 0, current_y = 0;
